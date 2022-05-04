@@ -2,6 +2,7 @@ import category from '../models/Category.js';
 
 const store = async (req, res) => {
     try {
+        if(!req.body.title) { throw {code: 428, message: "Masukkan title"}}
         const title = req.body.title;
         const newCategory = new category({
             title: title,
