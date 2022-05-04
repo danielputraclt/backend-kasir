@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema({
     title:{
@@ -6,7 +6,7 @@ const Schema = mongoose.Schema({
     },
     status:{
         type: String,
-        enum: ['actve', 'inactive'],
+        enum: ['active', 'inactive'],
         default: 'active',
     },
     createdAt:{
@@ -18,4 +18,6 @@ const Schema = mongoose.Schema({
 },
 {
     timestamps: {currentTime: () => Math.floor(Date.now()/1000)}
-})
+});
+
+export default mongoose.model('Category', Schema);
