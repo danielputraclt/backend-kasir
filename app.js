@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { store } from './controllers/CategoryController.js';
+import { index, store } from './controllers/CategoryController.js';
 
 import indexRouter from './routes/index.js';
 
@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
+app.get('/kategori', index);
 app.post('/kategori', store);
 //connect database mongoDB
 mongoose.connect(`${env.MONGODB_URI}${env.MONGODB_HOST}:${env.MONGODB_PORT}`, {
