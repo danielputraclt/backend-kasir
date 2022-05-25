@@ -25,6 +25,16 @@ const store = async (req, res) => {
     // if (!req.body.title) {
     //   throw { code: 428, message: "Masukkan title" };
     // }
+
+    // is required 
+    if(!req.body.title) { throw{code: 428, message: 'title is required'}} 
+    if(!req.body.thumbnail) { throw{code: 428, message: 'thumbnail is required'}}
+    if(!req.body.price) { throw{code: 428, message: 'price is required'}}
+    if(!req.body.category_id) { throw{code: 428, message: 'category ID is required'}}
+
+    //if product exist
+    const productExist = await product.findOne({title: req.body.title});
+    if(productExist){throw{code: 428, message: 'Product is exist'}}
     const title = req.body.title;
     const thumbnail = req.body.thumbnail;
     const price = req.body.price;
