@@ -1,4 +1,6 @@
 import product from "../models/Product.js";
+import category from "../models/Category.js";
+import mongoose from 'mongoose';
 
 const index = async (req, res) => {
 //   try {
@@ -40,6 +42,17 @@ const store = async (req, res) => {
     const price = req.body.price;
     const category_id = req.body.category_id;
 
+      //is objectID
+      if(!mongoose.Types.ObjectId.isValid(req.body.category_id)){
+        throw{code: 500, message: 'Category invalid'}
+      }
+      
+    //is category exist
+    const categoryExist = await category.findOne({_id: req.body.category_id});
+    if(!categoryExist){throw{code: 428, message: 'Category is not exist'}}
+
+  
+
     const newProduct = new product({
       title: title,
       thumbnail: thumbnail,
@@ -56,6 +69,7 @@ const store = async (req, res) => {
       Product,
     });
   } catch (err) {
+    if(!err.code) {err.code = 500}
     return res.status(err.code).json({
       status: false,
       message: err.message,
