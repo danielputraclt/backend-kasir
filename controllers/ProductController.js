@@ -3,23 +3,23 @@ import category from "../models/Category.js";
 import mongoose from 'mongoose';
 
 const index = async (req, res) => {
-//   try {
-//     const categories = await category.find();
+  try {
+    const products = await product.find({status: 'active'});
 
-//     if (!categories) {
-//       throw { code: 500, message: "Get categories failed" };
-//     }
-//     return res.status(200).json({
-//       status: true,
-//       total: categories.length,
-//       categories,
-//     });
-//   } catch (err) {
-//     return res.status(err.code).json({
-//       status: false,
-//       message: err.message,
-//     });
-//   }
+    if (!products) {
+      throw { code: 500, message: "Get products failed" };
+    }
+    return res.status(200).json({
+      status: true,
+      total: products.length,
+      products,
+    });
+  } catch (err) {
+    return res.status(err.code).json({
+      status: false,
+      message: err.message,
+    });
+  }
 };
 
 const store = async (req, res) => {
@@ -46,7 +46,7 @@ const store = async (req, res) => {
       if(!mongoose.Types.ObjectId.isValid(req.body.category_id)){
         throw{code: 500, message: 'Category invalid'}
       }
-      
+
     //is category exist
     const categoryExist = await category.findOne({_id: req.body.category_id});
     if(!categoryExist){throw{code: 428, message: 'Category is not exist'}}
